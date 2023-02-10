@@ -1,0 +1,49 @@
+<div class="buttonAdd">
+    <button mat-raised-button color="stroked" style="background-color: lavender;" (click)="onAddClick()">New sensor type</button>
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #table>
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Type id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+    <ng-container matColumnDef="lowestValueExpected">
+        <th mat-header-cell *matHeaderCellDef> Lowest value expected </th>
+        <td mat-cell *matCellDef="let element"> {{element.lowestValueExpected}} </td>
+    </ng-container>
+    <ng-container matColumnDef="highestValueExpected">
+        <th mat-header-cell *matHeaderCellDef> Highest value expected </th>
+        <td mat-cell *matCellDef="let element"> {{element.highestValueExpected}} </td>
+    </ng-container>
+    <ng-container matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef>
+            Update type
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="onUpdateClick(row)">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>
+            Delete type
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="onDeleteClick(row.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator
+  #paginator
+  [pageSizeOptions]="[10]"
+  showFirstLastButtons
+></mat-paginator>

@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Settings</h2>
+<mat-dialog-content>
+    <table>
+        <tr>
+            <td>
+                <label>Sender email:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="email" [(ngModel)]="sender" [value]="sender" width="100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Receiver email:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="email" [(ngModel)]="receiver" [value]="receiver" width="100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Number of API calls:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="number" min="0" [(ngModel)]="numberAPICalls" [value]="numberAPICalls" width="100px">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>{{this.message}}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="updateSettings()">Update</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

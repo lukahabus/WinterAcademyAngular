@@ -1,0 +1,59 @@
+<div class="filters">
+    <span class="filter">
+        Filter: <input type="text" placeholder="Search by sensor serial number" [ngModel]="keywords" (ngModelChange)="keywordChanged($event)">
+    </span>
+    <span class="filter">
+        Sensor type:
+        <select [ngModel]="selectedSensorType" (ngModelChange)="sensorTypeSelected($event)" class="form-control" required>
+            <option [value]="">--</option>
+            <option [ngValue]="t" *ngFor="let t of sensorTypes">{{t.description}}</option>
+        </select>
+    </span>
+    <span class="filter">
+        From date: <input type="date" [ngModel]="selectedDate" (ngModelChange)="dateSelected($event)" class="form-control" required>
+    </span>
+    <span class="filter">
+        Sort by: 
+        <select [ngModel]="selectedOption" (ngModelChange)="sortOptionChanged($event)" class="form-control" required>
+            <option [value]="opcija" *ngFor="let opcija of selectSortOptions">{{opcija}}</option>
+        </select>
+    </span>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #table>
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Notification id </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="isUnexpectedValue(element)"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="sensorId">
+        <th mat-header-cell *matHeaderCellDef> Sensor </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="isUnexpectedValue(element)"> S-{{element.sensorId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Reported status </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="isUnexpectedValue(element)"> {{element.status}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dateTimeReceived">
+        <th mat-header-cell *matHeaderCellDef> Date and time notification received </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="isUnexpectedValue(element)"> {{formatDate(element.dateTimeReceived)}} </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>
+            Delete notification
+        </th>
+        <td mat-cell *matCellDef="let row" [ngClass]="isUnexpectedValue(row)">
+            <button mat-icon-button (click)="onDeleteClick(row.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator
+  #paginator
+  [pageSizeOptions]="[10]"
+  showFirstLastButtons
+></mat-paginator>
+

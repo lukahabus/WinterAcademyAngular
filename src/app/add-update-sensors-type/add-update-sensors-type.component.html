@@ -1,0 +1,35 @@
+<h2 mat-dialog-title id="title">{{title}}</h2>
+<mat-dialog-content>
+    <table>
+        <tr>
+            <td>
+                <label>Description:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="text" [(ngModel)]="description" [value]="sensorType?.description" width="100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Lowest value expected:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="number" [(ngModel)]="lowestValueExpected" [value]="sensorType?.lowestValueExpected" width="100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Highest value expected:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="number" [(ngModel)]="highestValueExpected" [value]="sensorType?.highestValueExpected" width="100px">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>{{this.message}}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="updateMethod ? update() : add()">{{title!!.split(" ")[0]}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,33 @@
+<h2 mat-dialog-title id="title">{{title}}</h2>
+<mat-dialog-content>
+    <table>
+        <tr>
+            <td>
+                <label>Current status:</label>
+            </td>
+            <td>
+                <input class="form-control" required type="number" [(ngModel)]="currentStatus" [value]="sensor?.currentStatus" width="100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Sensor type:</label>
+            </td>
+            <td>
+                <select id="sensorType" name="sensorType" width="100px" [(ngModel)]="initialValue" 
+                    class="form-control" required (ngModelChange)="selectType($event)">
+                    <option *ngFor="let st of sensorTypes" 
+                            [value]="st.id" [selected]="st.id == sensor?.typeId">
+                            {{st.description}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>{{this.message}}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="updateMethod ? update() : add()">{{title!!.split(" ")[0]}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
