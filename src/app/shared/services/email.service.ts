@@ -18,7 +18,7 @@ export class EmailService {
     Email.send({
       Host : 'smtp.elasticemail.com',
       Username : 'qii76215@nezid.com',
-      Password : 'EB0B5C14918F5B80B5F35DE8786D2430E5D6',
+      Password : '',
       To : receiver,
       From : sender,
       Subject : title,
