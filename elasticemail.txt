@@ -1,0 +1,5 @@
+habusluka.gdi@gmail.com
+34DF1A7DE29ADAB12C0E7BF5910EE3686720
+
+Server: smtp.elasticemail.com
+Port: 2525
