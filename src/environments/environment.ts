@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: "https://localhost:7237/",
-  sender: "nmidzic@yahoo.com",
-  receiver: "bza28975@zslsz.com"
+  sender: "habusluka.gdi@gmail.com",
+  receiver: "habusluka@gmail.com"
 };
 
 /*

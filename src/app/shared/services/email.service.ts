@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageDialogComponent } from 'src/app/message-dialog/message-dialog.component.js';
-import './../../../assets/smtp.js';  
+import './../../../assets/smtp.js';
 //declare let Email: any;
 
 
@@ -17,18 +17,18 @@ export class EmailService {
   {
     Email.send({
       Host : 'smtp.elasticemail.com',
-      Username : 'qii76215@nezid.com',
-      Password : '',
+      Username : 'habusluka.gdi@gmail.com',
+      Password : '34DF1A7DE29ADAB12C0E7BF5910EE3686720',
       To : receiver,
       From : sender,
       Subject : title,
       Body : message
-      }).then( 
+      }).then(
         (message: any) => {
-        //alert(`Sent message ${message} from ${sender} to ${receiver}`); 
+        //alert(`Sent message ${message} from ${sender} to ${receiver}`);
         this._snackBar.open(`Sent message ${message} from ${sender} to ${receiver}`, "Ok");
       } );
   }
 
- 
+
 }
