@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SocketService } from './shared/services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,11 @@ import { SettingsComponent } from './settings/settings.component';
 export class AppComponent {
   title = 'Sensors';
 
-  constructor(private dialog : MatDialog) {}
+  constructor(private dialog : MatDialog, private socketService: SocketService) {}
+
+  ngOnInit(): void{
+    this.socketService.buildConnection();
+  }
 
   openSettingsWindow()
   {
