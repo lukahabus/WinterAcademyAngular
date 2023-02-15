@@ -4,16 +4,15 @@
       <ul>
         <li>
           <a id="logo" href="" title="sensor icons">
-            <img src="../assets/icon.png" alt="njfek" height="30px">
+            <img src="../assets/icon.png" alt="sensor icon" height="30px">
           </a>
         </li>
         <li><a href="/sensors">Sensors</a></li>
         <li><a href="/sensor-types">Sensor Types</a></li>
         <li><a href="/notifications">Notifications</a></li>
         <li>
-          <button mat-icon-button>
-            <span class="material-icons" (click)="openSettingsWindow()">settings</span> <!--imported font Fira sans overrides <mat-icon> in this file for some reason, so need to do it like this for the icon to show-->
-          </button>
+          <button mat-icon-button class="material-icons" (click)="openSettingsWindow()">settings</button>
+          <!--imported font Fira sans overrides <mat-icon> in this file for some reason, so need to do it like this for the icon to show-->
         </li>
       </ul>
     </nav>
@@ -23,5 +22,7 @@
   <router-outlet></router-outlet>
 </div>
 <footer>
-  &copy;Sensor icon created by Freepik - Flaticon
+  <span>
+    Made with<mat-icon class="love">favorite</mat-icon>at GDi
+  </span>
 </footer>
