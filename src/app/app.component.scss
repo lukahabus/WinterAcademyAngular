@@ -97,3 +97,11 @@ span {
   }
 }
 
+::ng-deep .mat-paginator {
+  width: 90%;
+  // display: flex;
+  // justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+

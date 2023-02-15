@@ -1,6 +1,27 @@
+body {
+  text-align: center !important;
+}
+
 .buttonAdd {
     margin: 10px;
     padding: 20px;
 }
+
+table {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  td, th {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .mat-sort-header-container {
+    justify-content: center !important;
+  }
+}
+
+
 
 

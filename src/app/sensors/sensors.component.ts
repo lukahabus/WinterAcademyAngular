@@ -26,11 +26,11 @@ export class SensorsComponent implements OnInit {
   allowMultiSelect = false;
   selection = new SelectionModel<ISensor>(this.allowMultiSelect, this.initialSelection);
 
-  displayedColumns: string[] = ['id', 'currentStatus', 'typeDescription', 'interval', 'notifications', 'update', 'delete'];
+  displayedColumns: string[] = ['id', 'currentStatus', 'typeDescription', 'interval', 'notifications', 'update', 'delete', 'check'];
 
   constructor(
-    private router: Router, 
-    private sensorsService: SensorsService, 
+    private router: Router,
+    private sensorsService: SensorsService,
     private activatedRoute: ActivatedRoute,
     public dialog : MatDialog,
     private emailServices : EmailService) { }
@@ -39,7 +39,7 @@ export class SensorsComponent implements OnInit {
 
   @ViewChild('paginator') paginator!: MatPaginator;
 
-  setDataSource() 
+  setDataSource()
   {
     this.dataSource = new MatTableDataSource<ISensor>();
     this.dataSource.data = this.sensors;
@@ -77,8 +77,8 @@ export class SensorsComponent implements OnInit {
 
       let dateTimeFormatted = new Date(Date.parse(notification.dateTimeReceived));
 
-      notificationsFormatted += "<strong>Notification no. " + (index + 1) + "</strong><br>" 
-        + "Status reported was: " + notification.status + "<br>" 
+      notificationsFormatted += "<strong>Notification no. " + (index + 1) + "</strong><br>"
+        + "Status reported was: " + notification.status + "<br>"
         + "Date and time reported: " + dateTimeFormatted + "<br><br>";
 
     });
@@ -106,7 +106,7 @@ export class SensorsComponent implements OnInit {
     });
   }
 
-  onUpdateClick(sensor : ISensor) 
+  onUpdateClick(sensor : ISensor)
   {
     let dialogRef = this.dialog.open(UpdateSensorComponent, { data: {"method": "Update", "sensor": sensor} });
 
@@ -125,7 +125,7 @@ export class SensorsComponent implements OnInit {
     });
   }
 
-  onDeleteClick(sensorId: number) 
+  onDeleteClick(sensorId: number)
   {
     this.sensorsService.deleteSensor(sensorId)
       .subscribe(response => {
@@ -134,7 +134,7 @@ export class SensorsComponent implements OnInit {
       });
   }
 
-  @ViewChild('table') table! : MatTable<ISensor>; 
+  @ViewChild('table') table! : MatTable<ISensor>;
 
   refreshTable()
   {

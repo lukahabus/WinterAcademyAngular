@@ -1,7 +1,7 @@
 <div class="buttonAdd">
     <button mat-raised-button color="stroked" style="background-color: lavender;" (click)="onAddClick()">New sensor</button>
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #table>
+<table mat-table [dataSource]="dataSource" class="center" #table>
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> Serial number </th>
         <td mat-cell *matCellDef="let element" [ngClass]="isUnexpectedValue(element)"> S-{{element.id}} </td>
@@ -49,6 +49,16 @@
             </button>
         </td>
     </ng-container>
+    <ng-container matColumnDef="check">
+      <th mat-header-cell *matHeaderCellDef>
+          Check sensor
+      </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="isUnexpectedValue(row)">
+          <button mat-icon-button (click)="onUpdateClick(row)">
+              <mat-icon>check_circle_outline</mat-icon>
+          </button>
+      </td>
+  </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
