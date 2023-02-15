@@ -125,6 +125,14 @@ export class SensorsComponent implements OnInit {
     });
   }
 
+  onCheckClick(id : number)
+  {
+    this.sensorsService.checkSensor(id)
+      .subscribe(response => {
+        this.refreshTable();
+      })
+  }
+
   onDeleteClick(sensorId: number)
   {
     this.sensorsService.deleteSensor(sensorId)

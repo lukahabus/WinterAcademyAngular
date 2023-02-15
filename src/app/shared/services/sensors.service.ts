@@ -14,7 +14,7 @@ export class SensorsService {
 
   constructor(private http: HttpClient) { }
 
-  getSensors(): Observable<ISensor[]> 
+  getSensors(): Observable<ISensor[]>
   {
     return this.http.get<ISensor[]>(url)
       .pipe(
@@ -24,7 +24,7 @@ export class SensorsService {
       );
   }
 
-  getSensor(id : number): Observable<ISensor> 
+  getSensor(id : number): Observable<ISensor>
   {
     return this.http.get<ISensor>(`${url}/${id}`)
       .pipe(
@@ -45,8 +45,13 @@ export class SensorsService {
   }
 
   deleteSensor(id : number)
-  {    
+  {
     return this.http.delete<ISensor>(`${url}/${id}`);
+  }
+
+  checkSensor(id : number)
+  {
+    return this.http.post(`${url}/check/${id}`, null);
   }
 
 

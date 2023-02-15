@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "camunda-external-task-client-js": "3.0.0-alpha1",
+    "node-fetch": "^3.3.0"
+  }
+}

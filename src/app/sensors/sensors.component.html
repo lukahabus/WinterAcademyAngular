@@ -53,8 +53,8 @@
       <th mat-header-cell *matHeaderCellDef>
           Check sensor
       </th>
-      <td mat-cell *matCellDef="let row" [ngClass]="isUnexpectedValue(row)">
-          <button mat-icon-button (click)="onUpdateClick(row)">
+      <td mat-cell *matCellDef="let row" [ngClass]="isUnexpectedValue(row.id)">
+          <button mat-icon-button (click)="onCheckClick(row.id)">
               <mat-icon>check_circle_outline</mat-icon>
           </button>
       </td>
