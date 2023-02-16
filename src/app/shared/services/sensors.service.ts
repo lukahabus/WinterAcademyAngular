@@ -53,6 +53,4 @@ export class SensorsService {
   {
     return this.http.post(`${url}/check/${id}`, null);
   }
-
-
 }

@@ -1,4 +1,4 @@
 export interface ISocketNotifyMessage {
-  sensorId: string;
+  sensorID: string;
   message: string;
 }

@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { ISocketNotifyMessage } from '../models/ISocketNotifyMessage';
 import { EmailService } from './email.service';
+import { Subject } from 'rxjs';
+import { __values } from 'tslib';
 
 const apiUrl = environment.apiUrl;
 
@@ -13,12 +15,23 @@ const apiUrl = environment.apiUrl;
 export class SocketService {
   private hubConnection!: signalR.HubConnection;
   connectionAttempts: number = 0;
-  isConnecred = false;
+  isConnected = false;
+  isWorking = true;
+  isWorkingChange: Subject<boolean> = new Subject<boolean>();
+  sensorId : number = 0;
+  sensorIdChange: Subject<number> = new Subject<number>();
 
-  constructor(private emailService : EmailService) { }
+  constructor(private emailService : EmailService) {
+    this.isWorkingChange.subscribe((value) => {
+      this.isWorking = value;
+    })
+    this.sensorIdChange.subscribe((value) => {
+      this.sensorId = value;
+    })
+  }
 
   public buildConnection(): void{
-    if(this.isConnecred == false){
+    if(this.isConnected == false){
       this.hubConnection = new signalR.HubConnectionBuilder().withUrl(`${apiUrl}appHub`).build();
 
       this.startConnection();
@@ -28,6 +41,8 @@ export class SocketService {
         //alert(`socket message has been received: ${JSON.stringify(data)}`);
 
         let title = 'Sensor is not working';
+        this.isWorkingChange.next(!this.isWorking);
+        this.sensorIdChange.next(Number(data.sensorID));
 
         this.emailService.sendEmailSmtp(environment.sender, environment.receiver, title, data.message);
       })
@@ -41,7 +56,7 @@ export class SocketService {
       .start()
       .then(() => {
         this.connectionAttempts = 0;
-        this.isConnecred = true;
+        this.isConnected = true;
         console.log('socket Connection has been started');
       })
       .catch(err => {

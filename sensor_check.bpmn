@@ -4,32 +4,32 @@
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:outgoing>Flow_16k0us9</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_0z4lngw" name="Send GET Request To Check if sensor active" camunda:type="external" camunda:topic="sensor_check">
+    <bpmn:serviceTask id="check" name="Send GET Request To Check if sensor active" camunda:type="external" camunda:topic="sensor_check">
       <bpmn:incoming>Flow_16k0us9</bpmn:incoming>
       <bpmn:outgoing>Flow_0epo6f5</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_16k0us9" sourceRef="StartEvent_1" targetRef="Activity_0z4lngw" />
+    <bpmn:sequenceFlow id="Flow_16k0us9" sourceRef="StartEvent_1" targetRef="check" />
     <bpmn:exclusiveGateway id="Gateway_1p3y2jd" name="isWorking" default="Flow_1hbzh3t">
       <bpmn:incoming>Flow_0epo6f5</bpmn:incoming>
       <bpmn:outgoing>Flow_1hbzh3t</bpmn:outgoing>
       <bpmn:outgoing>Flow_1o0242p</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0epo6f5" sourceRef="Activity_0z4lngw" targetRef="Gateway_1p3y2jd" />
-    <bpmn:sequenceFlow id="Flow_1hbzh3t" name="No" sourceRef="Gateway_1p3y2jd" targetRef="Activity_1116en0" />
+    <bpmn:sequenceFlow id="Flow_0epo6f5" sourceRef="check" targetRef="Gateway_1p3y2jd" />
+    <bpmn:sequenceFlow id="Flow_1hbzh3t" name="No" sourceRef="Gateway_1p3y2jd" targetRef="send-alert" />
     <bpmn:exclusiveGateway id="Gateway_1nyvxyh">
       <bpmn:incoming>Flow_10v553z</bpmn:incoming>
       <bpmn:incoming>Flow_1o0242p</bpmn:incoming>
       <bpmn:outgoing>Flow_09t0bhm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_10v553z" sourceRef="Activity_1116en0" targetRef="Gateway_1nyvxyh" />
+    <bpmn:sequenceFlow id="Flow_10v553z" sourceRef="send-alert" targetRef="Gateway_1nyvxyh" />
     <bpmn:endEvent id="Event_0uv1j3d" name="End">
       <bpmn:incoming>Flow_09t0bhm</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_09t0bhm" sourceRef="Gateway_1nyvxyh" targetRef="Event_0uv1j3d" />
     <bpmn:sequenceFlow id="Flow_1o0242p" name="Yes" sourceRef="Gateway_1p3y2jd" targetRef="Gateway_1nyvxyh">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="javascript">active</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isWorking == "true"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="Activity_1116en0" name="Send Mail" camunda:type="external" camunda:topic="send_mail">
+    <bpmn:serviceTask id="send-alert" name="Send Mail" camunda:type="external" camunda:topic="send_mail">
       <bpmn:incoming>Flow_1hbzh3t</bpmn:incoming>
       <bpmn:outgoing>Flow_10v553z</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -42,7 +42,7 @@
           <dc:Bounds x="158" y="155" width="25" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0m5r74w_di" bpmnElement="Activity_0z4lngw">
+      <bpmndi:BPMNShape id="Activity_0m5r74w_di" bpmnElement="check">
         <dc:Bounds x="350" y="90" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -61,7 +61,7 @@
           <dc:Bounds x="1120" y="155" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wi9t2w_di" bpmnElement="Activity_1116en0">
+      <bpmndi:BPMNShape id="Activity_0wi9t2w_di" bpmnElement="send-alert">
         <dc:Bounds x="700" y="290" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_16k0us9_di" bpmnElement="Flow_16k0us9">
@@ -80,6 +80,13 @@
           <dc:Bounds x="651" y="308" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o0242p_di" bpmnElement="Flow_1o0242p">
+        <di:waypoint x="635" y="130" />
+        <di:waypoint x="885" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="752" y="112" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10v553z_di" bpmnElement="Flow_10v553z">
         <di:waypoint x="800" y="330" />
         <di:waypoint x="910" y="330" />
@@ -88,13 +95,6 @@
       <bpmndi:BPMNEdge id="Flow_09t0bhm_di" bpmnElement="Flow_09t0bhm">
         <di:waypoint x="935" y="130" />
         <di:waypoint x="1112" y="130" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1o0242p_di" bpmnElement="Flow_1o0242p">
-        <di:waypoint x="635" y="130" />
-        <di:waypoint x="885" y="130" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="752" y="112" width="18" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

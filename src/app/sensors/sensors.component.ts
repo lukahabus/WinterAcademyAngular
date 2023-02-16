@@ -11,6 +11,7 @@ import { ISensor } from '../shared/models/ISensor';
 import { EmailService } from '../shared/services/email.service';
 import { NotificationsService } from '../shared/services/notifications.service';
 import { SensorsService } from '../shared/services/sensors.service';
+import { SocketService } from '../shared/services/socket.service';
 import { UpdateSensorComponent } from '../update-sensor/update-sensor.component';
 
 @Component({
@@ -25,6 +26,7 @@ export class SensorsComponent implements OnInit {
   initialSelection = [];
   allowMultiSelect = false;
   selection = new SelectionModel<ISensor>(this.allowMultiSelect, this.initialSelection);
+  isWorking = true;
 
   displayedColumns: string[] = ['id', 'typeDescription', 'interval', 'currentStatus', 'notifications', 'update', 'delete', 'check'];
 
@@ -33,7 +35,8 @@ export class SensorsComponent implements OnInit {
     private sensorsService: SensorsService,
     private activatedRoute: ActivatedRoute,
     public dialog : MatDialog,
-    private emailServices : EmailService) { }
+    private emailServices : EmailService,
+    public socketServices : SocketService) { }
 
   dataSource!: MatTableDataSource<ISensor>;
 
@@ -129,7 +132,10 @@ export class SensorsComponent implements OnInit {
   {
     this.sensorsService.checkSensor(id)
       .subscribe(response => {
+        //debugger
+        this.isWorking = this.socketServices.isWorking;
         this.refreshTable();
+        console.log();
       })
   }
 

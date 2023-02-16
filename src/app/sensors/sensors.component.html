@@ -54,7 +54,8 @@
       </th>
       <td mat-cell *matCellDef="let row" [ngClass]="isUnexpectedValue(row)">
           <button mat-icon-button (click)="onCheckClick(row.id)">
-              <mat-icon>check_circle_outline</mat-icon>
+              <mat-icon *ngIf="socketServices.sensorId != row.id">check_circle_outline</mat-icon>
+              <mat-icon *ngIf="socketServices.sensorId == row.id">check_circle</mat-icon>
           </button>
       </td>
   </ng-container>
@@ -67,3 +68,7 @@
   [pageSizeOptions]="[10]"
   showFirstLastButtons
 ></mat-paginator>
+
+<!-- {{ socketServices.sensorId }}
+<br>
+{{ !socketServices.isWorking }} -->

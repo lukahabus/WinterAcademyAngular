@@ -7,7 +7,6 @@ import fetch from "node-fetch";
 
 import https from 'https';
 
-
 const config = { baseUrl: "http://localhost:8080/engine-rest", use: logger };
 
 const client = new Client(config);
@@ -54,7 +53,6 @@ client.subscribe("sensor_check", async function( {task, taskService})  {
         let isWorking = await success.text();
 
         console.log("isWorking " + isWorking);
-
 
         const processVariables = new Variables()
 
