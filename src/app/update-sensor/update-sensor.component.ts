@@ -19,7 +19,7 @@ export class UpdateSensorComponent implements OnInit {
 
   updateMethod : boolean = true;
   title : string | undefined;
-  
+
   sensor : ISensor | undefined;
 
   sensorTypes : ISensorType[] | undefined;
@@ -31,10 +31,10 @@ export class UpdateSensorComponent implements OnInit {
 
   message = "";
 
-  ngOnInit() 
+  ngOnInit()
   {
     this.showSensorTypes();
-  
+
   }
 
   showSensorTypes()
@@ -58,14 +58,14 @@ export class UpdateSensorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data : any,
     private dialogRef: MatDialogRef<UpdateSensorComponent>,
     private sensorsService : SensorsService,
-    private notificationsService: NotificationsService, 
+    private notificationsService: NotificationsService,
     private sensorTypesService : SensorTypesService,
     private emailServices : EmailService)
   {
     console.log("Data " + JSON.stringify(data));
 
     this.updateMethod = (data.method == "Update");
-    this.title = (this.updateMethod) ? `Update sensor ${data.sensor.id}` : `Add new sensor`;
+    this.title = (this.updateMethod) ? `Update Sensor ${data.sensor.id}` : `Add New Sensor`;
 
     if (this.updateMethod)
       this.fillFields(data);
@@ -112,9 +112,9 @@ export class UpdateSensorComponent implements OnInit {
         console.log(`addSensor subscribe -> error notification`);
         message = `Error - sensor not added ${err}`;
       },
-      
+
     });
-    
+
   }
 
   addNotification(addedSensor : ISensor)
@@ -124,6 +124,7 @@ export class UpdateSensorComponent implements OnInit {
       dateTimeReceived: (new Date()).toISOString(),
       sensorId: addedSensor!.id!
     };
+    //console.log((new Date()).toISOString());
     this.notificationsService.addNotification(newNotification).subscribe({
       next : addedNotification => {
 
@@ -134,19 +135,19 @@ export class UpdateSensorComponent implements OnInit {
       },
       error: err => {
         console.log(`addNotification subscribe -> error notification`);
-      }          
+      }
     });
   }
 
   isReportedStatusInExpectedInterval(addedSensor : ISensor)
   {
-    return (addedSensor.currentStatus >= addedSensor.typeLowestValueExpected! && 
+    return (addedSensor.currentStatus >= addedSensor.typeLowestValueExpected! &&
       addedSensor.currentStatus <= addedSensor.typeHighestValueExpected!);
   }
 
   update()
   {
-    if (!this.validateInput()) 
+    if (!this.validateInput())
       return;
 
     let updatedSensor : ISensor = this.sensor!;
@@ -166,7 +167,7 @@ export class UpdateSensorComponent implements OnInit {
         message = `Error - sensor not updated. ${err}`;
       }
     });
-    
+
   }
 
   closeDialog(message : string)
@@ -178,13 +179,13 @@ export class UpdateSensorComponent implements OnInit {
   selectType(val : number)
   {
     console.log(val);
-    this.selectedTypeId = val; 
+    this.selectedTypeId = val;
   }
 
   validateInput() : boolean
   {
-    if (this.selectedTypeId == this.sensor!.typeId && 
-      this.currentStatus == this.sensor!.currentStatus) 
+    if (this.selectedTypeId == this.sensor!.typeId &&
+      this.currentStatus == this.sensor!.currentStatus)
     {
       this.message = "No new values entered";
       return false;
@@ -207,7 +208,7 @@ export class UpdateSensorComponent implements OnInit {
 
     let lowOrHighStatusMessage : string = (addedSensor.currentStatus < addedSensor.typeLowestValueExpected!) ? "low" : "high";
 
-    let message : string = `A notification for sensor with serial number ${addedSensor.id} was just added.\nYou received this alert because the notification reported an unexpected
+    let message : string = `A notification for sensor with ID ${addedSensor.id} was just added.\nYou received this alert because the notification reported an unexpected
       value of ${addedSensor.currentStatus} for the sensor.\nThe expected range is ${addedSensor.typeLowestValueExpected}-${addedSensor.typeHighestValueExpected}
       for this sensor type, which monitors the parameter ${addedSensor.typeDescription}.\nThe current sensor value is too ${lowOrHighStatusMessage}.\nPlease check your plant :(`;
 

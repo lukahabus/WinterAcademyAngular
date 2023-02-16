@@ -26,7 +26,7 @@ export class SensorsComponent implements OnInit {
   allowMultiSelect = false;
   selection = new SelectionModel<ISensor>(this.allowMultiSelect, this.initialSelection);
 
-  displayedColumns: string[] = ['id', 'currentStatus', 'typeDescription', 'interval', 'notifications', 'update', 'delete', 'check'];
+  displayedColumns: string[] = ['id', 'typeDescription', 'interval', 'currentStatus', 'notifications', 'update', 'delete', 'check'];
 
   constructor(
     private router: Router,
@@ -78,8 +78,8 @@ export class SensorsComponent implements OnInit {
       let dateTimeFormatted = new Date(Date.parse(notification.dateTimeReceived));
 
       notificationsFormatted += "<strong>Notification no. " + (index + 1) + "</strong><br>"
-        + "Status reported was: " + notification.status + "<br>"
-        + "Date and time reported: " + dateTimeFormatted + "<br><br>";
+        + "Status reported: " + notification.status + "<br>"
+        + "Notification reported: " + dateTimeFormatted.toDateString() + " " + dateTimeFormatted.toLocaleTimeString() + "<br><br>";
 
     });
 
@@ -100,7 +100,7 @@ export class SensorsComponent implements OnInit {
 
         console.log(result.data);
         message = result.data;
-        this.openMessageDialog(message, "Add sensor");
+        this.openMessageDialog(message, "Add Sensor");
 
       }
     });

@@ -12,7 +12,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
 
   updateMethod : boolean = true;
   title : string | undefined;
-  
+
   sensorType : ISensorType | undefined;
 
   id : number | undefined;
@@ -22,7 +22,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
 
   message = "";
 
-  ngOnInit() 
+  ngOnInit()
   {
   }
 
@@ -34,7 +34,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
     console.log("Data " + JSON.stringify(data));
 
     this.updateMethod = (data.method == "Update");
-    this.title = (this.updateMethod) ? `Update sensor type ${data.sensorType.id}` : `Add new sensor type`;
+    this.title = (this.updateMethod) ? `Update Sensor Type ${data.sensorType.id}` : `Add New Sensor Type`;
 
     if (this.updateMethod)
       this.fillFieldsExistingData(data);
@@ -58,7 +58,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
   {
     this.description = "";
     this.lowestValueExpected = 0;
-    this.highestValueExpected = 1;
+    this.highestValueExpected = 100;
   }
 
   async add()
@@ -69,7 +69,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
       highestValueExpected: this.highestValueExpected!,
     };
 
-    if (!this.validateInput()) 
+    if (!this.validateInput())
       return;
 
     let message = "";
@@ -85,14 +85,14 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
         console.log(`addSensorType subscribe -> error notification`);
         message = `Error - sensor type not added ${err}`;
       },
-      
+
     });
-    
+
   }
 
   update()
   {
-    if (!this.validateInput()) 
+    if (!this.validateInput())
       return;
 
     let updatedSensorType : ISensorType = this.sensorType!;
@@ -112,7 +112,7 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
         message = `Error - sensor type not updated. ${err}`;
       }
     });
-    
+
   }
 
   closeDialog(message : string)
@@ -124,9 +124,9 @@ export class AddUpdateSensorsTypeComponent implements OnInit {
   validateInput() : boolean
   {
     if (this.updateMethod &&
-      this.description == this.sensorType!.description && 
+      this.description == this.sensorType!.description &&
       this.lowestValueExpected == this.sensorType!.lowestValueExpected &&
-      this.highestValueExpected == this.sensorType!.highestValueExpected) 
+      this.highestValueExpected == this.sensorType!.highestValueExpected)
     {
       this.message = "No new values entered";
       return false;

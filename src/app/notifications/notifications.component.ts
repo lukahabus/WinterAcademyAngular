@@ -31,13 +31,13 @@ export class NotificationsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'sensorId', 'status', 'dateTimeReceived', 'delete'];
 
   constructor(
-    private router: Router, 
-    private notificationsService: NotificationsService, 
+    private router: Router,
+    private notificationsService: NotificationsService,
     private sensorsService : SensorsService,
     private sensorTypesService : SensorTypesService,
     public dialog : MatDialog,
-    private emailServices : EmailService) 
-  { 
+    private emailServices : EmailService)
+  {
     this.showSensorTypes();
     this.showNotifications();
   }
@@ -77,12 +77,12 @@ export class NotificationsComponent implements OnInit {
 
   }
 
-  @ViewChild('table') table! : MatTable<INotification>; 
+  @ViewChild('table') table! : MatTable<INotification>;
 
   sortNotifications()
   {
     //clear the array before sorting
-    this.displayedNotifications.splice(0); 
+    this.displayedNotifications.splice(0);
     //console.log("before " + this.displayedNotifications.length + " " + this.allNotifications.length);
 
     if (this.num)
@@ -112,7 +112,7 @@ export class NotificationsComponent implements OnInit {
                 this.refreshTable();
               }
             },
-            
+
         });
         }
       );
@@ -125,14 +125,14 @@ export class NotificationsComponent implements OnInit {
       this.refreshTable();
     }
 
-    
+
   }
 
   dataSource!: MatTableDataSource<INotification>;
 
   @ViewChild('paginator') paginator!: MatPaginator;
 
-  setDataSource() 
+  setDataSource()
   {
 
     this.dataSource = new MatTableDataSource<INotification>();
@@ -152,7 +152,8 @@ export class NotificationsComponent implements OnInit {
 
   formatDate(datetime : string)
   {
-    return new Date(Date.parse(datetime));
+    let date = new Date(Date.parse(datetime));
+    return date.toDateString() + ", " + date.toLocaleTimeString();
   }
 
   //
@@ -162,7 +163,7 @@ export class NotificationsComponent implements OnInit {
   selectSortOptions : Array<string> = ["Date", "Sensor", "Sensor type"];
   selectedOption : string = this.selectSortOptions[0];
   selectedOptionValue : string = "d";
-  selectedDate? : string;
+  selectedDate? : string; // = "2023-02-16T10:04:47.466Z";
   keywords? : string;
   num? : number;
 
@@ -170,7 +171,7 @@ export class NotificationsComponent implements OnInit {
 
   ngDoCheck()
   {
-    console.log("Statusi: " + this.selectedDate + " " + this.selectedSensorType?.description + " " + this.selectedOption + " " + this.keywords);
+    console.log("Statusi: " + this.keywords + " " + this.selectedSensorType?.description + " " + this.selectedDate + " " + this.selectedOption);
   }
 
   sortOptionChanged(selectedOption : any)
@@ -220,7 +221,7 @@ export class NotificationsComponent implements OnInit {
     return element.currentStatus < element.typeLowestValueExpected!! || element.currentStatus > element.typeHighestValueExpected!! ? 'red' : '';
   }
 
-  onDeleteClick(notificationId: number) 
+  onDeleteClick(notificationId: number)
   {
     this.notificationsService.deleteNotification(notificationId)
       .subscribe(response => {
