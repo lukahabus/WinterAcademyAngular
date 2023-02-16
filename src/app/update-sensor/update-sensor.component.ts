@@ -204,7 +204,7 @@ export class UpdateSensorComponent implements OnInit {
   {
     let sender : string = environment.sender;
     let receiver : string = environment.receiver;
-    let title : string = "Unexpected sensor value alert"
+    let title : string = "Unexpected sensor value alert";
 
     let lowOrHighStatusMessage : string = (addedSensor.currentStatus < addedSensor.typeLowestValueExpected!) ? "low" : "high";
 

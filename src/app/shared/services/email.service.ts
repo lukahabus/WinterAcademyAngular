@@ -24,9 +24,9 @@ export class EmailService {
       Subject : title,
       Body : message
       }).then(
-        (message: any) => {
+        (res: any) => {
         //alert(`Sent message ${message} from ${sender} to ${receiver}`);
-        this._snackBar.open(`Sent message ${message} from ${sender} to ${receiver}`, "Ok");
+        this._snackBar.open(`Sent message from ${sender} to ${receiver}`, "Ok");
       } );
   }
 

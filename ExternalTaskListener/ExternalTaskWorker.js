@@ -1,6 +1,7 @@
 //pokretanje: node ExternalTaskWorker.js
 
 import { Client, logger, Variables } from "camunda-external-task-client-js";
+import { Headers } from "node-fetch";
 
 import fetch from "node-fetch";
 
@@ -13,9 +14,10 @@ const client = new Client(config);
 
 
 const apiUrl = `https://localhost:7237/api/SignalRealTime`;
+const notificationUrl = apiUrl + `/notify`;
 
 
-client.subscribe("sensor-status", async function( {task, taskService})  {
+client.subscribe("sensor_check", async function( {task, taskService})  {
 
 
     console.log("Got to sensor status");
@@ -32,13 +34,10 @@ client.subscribe("sensor-status", async function( {task, taskService})  {
 
     });
 
-
-    let url = apiUrl;
-
-    console.log(url);
+    console.log(apiUrl);
 
 
-    fetch(url, {
+    fetch(apiUrl, {
 
         method: 'GET',
 
@@ -85,16 +84,17 @@ client.subscribe("sensor-status", async function( {task, taskService})  {
 });
 
 
-client.subscribe("send-alert", async function( {task, taskService})  {
+client.subscribe("send_mail", async function( {task, taskService})  {
 
     //httpPOSTNotify + sensorid + alert
 
-    let url = `${apiUrl}/notify`;
-
+    console.log("Got to send_mail");
 
     let header = new Headers();
 
     header.set("Content-Type", "application/json");
+
+    console.log('test');
 
 
     let sensorId = task.businessKey;
@@ -102,7 +102,7 @@ client.subscribe("send-alert", async function( {task, taskService})  {
     let message = "Alert! Sensor with the serial number " + sensorId + " is not functional. Please check the sensor";
 
 
-    console.log("Message "+ message);
+    console.log("Message "+ message + " " + sensorId);
 
 
     //disable SSL verification which API requires
@@ -114,10 +114,10 @@ client.subscribe("send-alert", async function( {task, taskService})  {
     });
 
 
-    let params = { method: 'POST', body: JSON.stringify( { "sensorId": sensorId, "message": message  } ), headers: header, agent: httpsAgent};
+    let params = { method: 'POST', body: JSON.stringify( { "SensorID": sensorId, "Message": message  } ), headers: header, agent: httpsAgent};
 
 
-    fetch(url, params)
+    fetch(notificationUrl, params)
 
     .then( async (success) =>
 
