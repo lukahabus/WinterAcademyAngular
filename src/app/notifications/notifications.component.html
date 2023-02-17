@@ -1,8 +1,8 @@
 <div class="filters">
     <span class="filter">
-        Filter: <input type="text" placeholder="Search by sensor ID" [ngModel]="keywords" (ngModelChange)="keywordChanged($event)">
+        <mat-icon>search</mat-icon> <input type="text" placeholder=" Search by sensor ID" [ngModel]="keywords" (ngModelChange)="keywordChanged($event)">
     </span>
-    <span class="filter">
+    <!-- <span class="filter">
         Sensor type:
         <select [ngModel]="selectedSensorType" (ngModelChange)="sensorTypeSelected($event)" class="form-control" required>
             <option [value]="">--</option>
@@ -17,7 +17,7 @@
         <select [ngModel]="selectedOption" (ngModelChange)="sortOptionChanged($event)" class="form-control" required>
             <option [value]="opcija" *ngFor="let opcija of selectSortOptions">{{opcija}}</option>
         </select>
-    </span>
+    </span> -->
 </div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #table>
